@@ -10,25 +10,24 @@ import Fluent
 @testable import DjangoTranslator
 
 final class TestDjangoTranslatable: Model {
-    static let schema = "stock"
+    static let schema = "test"
     
     struct FieldKeys {
         static var id: FieldKey { "id" }
-        static var grams: FieldKey { "grams" }
-        static var strainID: FieldKey { "strain_id" }
+        static var text: FieldKey { "text" }
     }
 
     @ID(key: .id)
     var id: UUID?
     
-    @Field(key: FieldKeys.grams)
-    var grams: Double
+    @Field(key: FieldKeys.text)
+    var text: String
     
     init() { }
     
-    init(id: UUID? = nil, grams: Double) {
+    init(id: UUID? = nil, text: String) {
         self.$id.value = id
-        self.$grams.value = grams
+        self.$text.value = text
     }
 
 }
@@ -60,7 +59,7 @@ extension TestDjangoTranslatable: DjangoTranslatable {
     
     struct PyKeys: DjangoTranslatableKeys {
         let id: String = "models.UUIDField(default=uuid.uuid4, primary_key=True)"
-        let grams: String = "models.CharField(max_length=255, null=False, blank=False)"
+        let text: String = "models.CharField(max_length=255, null=False, blank=False)"
         
         init() { }
     }
